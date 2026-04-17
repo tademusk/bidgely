@@ -1,0 +1,62 @@
+[
+  {
+    "name": "logo",
+    "label": "Footer Logo",
+    "type": "image"
+  },
+  {
+    "name": "columns",
+    "label": "Columns",
+    "type": "group",
+    "repeater": true,
+    "children": [
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "text"
+      },
+      {
+        "name": "links",
+        "label": "Links",
+        "type": "group",
+        "repeater": true,
+        "children": [
+          {
+            "name": "text",
+            "label": "Text",
+            "type": "text"
+          },
+          {
+            "name": "url",
+            "label": "URL",
+            "type": "url"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "legal_links",
+    "label": "Legal Links",
+    "type": "group",
+    "repeater": true,
+    "children": [
+      {
+        "name": "text",
+        "label": "Text",
+        "type": "text"
+      },
+      {
+        "name": "url",
+        "label": "URL",
+        "type": "url"
+      }
+    ]
+  },
+  {
+    "name": "copyright",
+    "label": "Copyright",
+    "type": "text",
+    "default": "© 2026 Bidgely, Inc. All rights reserved."
+  }
+]

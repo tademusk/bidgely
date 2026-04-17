@@ -1,0 +1,18 @@
+<!--
+templateType: "page"
+isAvailableForNewContent: true
+label: "Home"
+-->
+
+{% global_partial path="../partials/header.html" %}
+
+{% dnd_area "dnd_area" label="Main" %}
+  {% dnd_section %}
+    {% dnd_module path="../modules/hero" label="Hero" %}
+    {% end_dnd_module %}
+  {% end_dnd_section %}
+
+  {# Add remaining sections/modules via the page editor. #}
+{% end_dnd_area %}
+
+{% global_partial path="../partials/footer.html" %}

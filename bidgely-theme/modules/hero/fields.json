@@ -1,0 +1,42 @@
+[
+  {
+    "name": "headline",
+    "label": "Headline",
+    "type": "text",
+    "default": "Every smart meter is a window. Few utilities ever look through."
+  },
+  {
+    "name": "subhead",
+    "label": "Subhead",
+    "type": "richtext",
+    "default": "Appliance-level intelligence for every customer, grid asset, and hour of the year, only on <strong>Bidgely UtilityAI™</strong>."
+  },
+  {
+    "name": "primary_cta_text",
+    "label": "Primary CTA Text",
+    "type": "text",
+    "default": "Talk to Sales"
+  },
+  {
+    "name": "primary_cta_url",
+    "label": "Primary CTA URL",
+    "type": "url"
+  },
+  {
+    "name": "secondary_cta_text",
+    "label": "Secondary CTA Text",
+    "type": "text",
+    "default": "Watch Overview"
+  },
+  {
+    "name": "secondary_cta_url",
+    "label": "Secondary CTA URL",
+    "type": "url"
+  },
+  {
+    "name": "show_grid",
+    "label": "Show Background Grid",
+    "type": "boolean",
+    "default": true
+  }
+]

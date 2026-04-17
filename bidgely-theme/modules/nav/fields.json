@@ -1,0 +1,40 @@
+[
+  {
+    "name": "logo",
+    "label": "Logo",
+    "type": "image",
+    "required": false
+  },
+  {
+    "name": "logo_link",
+    "label": "Logo Link",
+    "type": "url"
+  },
+  {
+    "name": "menu",
+    "label": "Menu",
+    "type": "menu"
+  },
+  {
+    "name": "secondary_cta_text",
+    "label": "Secondary CTA Text",
+    "type": "text",
+    "default": "Log In"
+  },
+  {
+    "name": "secondary_cta_url",
+    "label": "Secondary CTA URL",
+    "type": "url"
+  },
+  {
+    "name": "primary_cta_text",
+    "label": "Primary CTA Text",
+    "type": "text",
+    "default": "Talk to Sales"
+  },
+  {
+    "name": "primary_cta_url",
+    "label": "Primary CTA URL",
+    "type": "url"
+  }
+]
