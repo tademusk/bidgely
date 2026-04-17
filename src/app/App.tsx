@@ -94,10 +94,11 @@ export default function App() {
       <nav className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 md:px-14 h-[62px] bg-white/97 backdrop-blur-md border-b border-[var(--ink-hair)]">
         <div className="flex items-center gap-8">
           <a href="#" className="flex items-center no-underline">
-            <span className="font-[var(--sans)] text-xl font-extrabold tracking-tight text-[var(--ink)]">
-              <span className="bg-gradient-to-r from-[var(--navy)] to-[var(--teal)] bg-clip-text text-transparent font-extrabold">b</span>
-              idgely
-            </span>
+            <img
+              src={bidgelyWordmark}
+              alt="Bidgely"
+              className="h-6 md:h-7 w-auto object-contain"
+            />
           </a>
 
           <ul className="hidden lg:flex items-center gap-0.5 list-none m-0">
@@ -798,11 +799,11 @@ function CaseCard({ tag, logoSrc, logoAlt, solution, quote, result, resultLabel 
           {quote}
         </div>
         <div className="mt-auto">
-          <div className="flex items-baseline gap-2 pt-2.5">
-            <span className="font-[var(--sans)] text-[26px] font-extrabold tracking-tight bg-gradient-to-r from-[var(--navy)] to-[var(--teal)] bg-clip-text text-transparent leading-none whitespace-nowrap">
+          <div className="flex items-center gap-3 pt-2.5">
+            <span className="min-w-[92px] font-[var(--sans)] text-[26px] font-extrabold tracking-tight bg-gradient-to-r from-[var(--navy)] to-[var(--teal)] bg-clip-text text-transparent leading-none whitespace-nowrap">
               {result}
             </span>
-            <span className="text-xs text-[var(--ink-muted)]">{resultLabel}</span>
+            <span className="text-xs text-[var(--ink-muted)] leading-[1.25]">{resultLabel}</span>
           </div>
           <div className="pt-4">
             <a href="#" className="flex items-center gap-1 text-[13px] font-semibold text-[var(--teal)] no-underline pt-3 border-t border-[var(--ink-faint)] w-full hover:underline">
