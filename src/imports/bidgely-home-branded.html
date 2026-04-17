@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bidgely UtilityAI™: The Vertical AI Platform for Utilities</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600;1,700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:       #FFFFFF;
+  --off:         #EFF7FF;
+  --off-b:       #D7EFFF;
+  --light-blue:  #D7EFFF;
+  --ink:         #152D49;
+  --ink-mid:     #1E3D5C;
+  --ink-muted:   rgba(21,45,73,.52);
+  --ink-faint:   rgba(21,45,73,.10);
+  --ink-hair:    rgba(21,45,73,.07);
+
+  --navy:        #152D49;
+  --navy-mid:    #1A3558;
+  --navy-card:   #1C3A60;
+  --off-white:   #EFF7FF;
+  --muted:       rgba(215,239,255,.52);
+  --border:      rgba(255,255,255,.08);
+  --border-lt:   rgba(255,255,255,.13);
+
+  --teal:        #449BD5;
+  --teal-lt:     #7ABFE8;
+  --sky:         #449BD5;
+  --blue:        #2A7DC0;
+
+  --grad-cta:    linear-gradient(115deg,#152D49 0%,#449BD5 100%);
+  --grad-text:   linear-gradient(105deg,#152D49 0%,#449BD5 70%);
+  --grad-lt:     linear-gradient(105deg,#449BD5 0%,#7ABFE8 65%);
+
+  --sans:  'Montserrat', sans-serif;
+  --body:  'Montserrat', sans-serif;
+  --mono:  'Roboto Mono', monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--body);background:var(--white);color:var(--ink);line-height:1.6;overflow-x:hidden;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ══════════ NAV ══════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 56px;height:62px;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--ink-hair);
+}
+.nav-logo{display:flex;align-items:center;text-decoration:none;}
+.nav-wordmark{font-family:var(--sans);font-size:20px;font-weight:800;letter-spacing:-1px;color:var(--ink);}
+.nav-wordmark .b-grad{background:var(--grad-cta);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:800;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;margin-left:32px;}
+.nav-item{position:relative;}
+.nav-item>a,.nav-item>span{
+  display:flex;align-items:center;gap:5px;padding:10px 14px;
+  color:var(--ink-muted);text-decoration:none;font-size:14px;
+  font-family:var(--body);transition:color .18s;cursor:pointer;border-radius:6px;
+}
+.nav-item>a:hover,.nav-item>span:hover{color:var(--ink);background:var(--off);}
+.nav-chev{width:12px;height:12px;opacity:.3;transition:transform .2s;}
+.nav-item:hover .nav-chev{transform:rotate(180deg);}
+.nav-drop{
+  display:none;position:absolute;top:calc(100% + 8px);left:0;
+  background:var(--white);border:1px solid var(--ink-faint);
+  border-radius:14px;box-shadow:0 16px 48px rgba(0,0,0,.10);
+  padding:8px;min-width:240px;z-index:300;flex-direction:column;
+}
+.nav-item:hover .nav-drop{display:flex;}
+.nav-drop.two-col{flex-direction:row;min-width:500px;gap:0;}
+.drop-col{padding:8px;flex:1;}
+.drop-col-head{
+  font-family:var(--mono);font-size:10px;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--teal);padding:5px 12px 8px;
+  border-bottom:1px solid var(--ink-hair);margin-bottom:5px;
+}
+.drop-col+.drop-col{border-left:1px solid var(--ink-hair);}
+.drop-item{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:8px;text-decoration:none;transition:background .12s;cursor:pointer;}
+.drop-item:hover{background:var(--off);}
+.drop-icon{width:30px;height:30px;border-radius:7px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.di-teal{background:rgba(68,155,213,.08);border:1px solid rgba(68,155,213,.20);}
+.di-blue{background:rgba(42,125,192,.08);border:1px solid rgba(42,125,192,.18);}
+.di-sky{background:rgba(14,165,233,.08);border:1px solid rgba(14,165,233,.16);}
+.di-muted{background:var(--off);border:1px solid var(--ink-faint);}
+.drop-item-name{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--ink);margin-bottom:1px;}
+.drop-item-desc{font-size:11px;color:var(--ink-muted);line-height:1.4;}
+.drop-divider{height:1px;background:var(--ink-hair);margin:5px 4px;}
+.nav-cta{display:flex;align-items:center;gap:8px;}
+.btn-nav-ghost{padding:7px 16px;border-radius:6px;border:1px solid var(--ink-faint);background:transparent;color:var(--ink-mid);font-size:13px;font-family:var(--body);cursor:pointer;transition:all .18s;}
+.btn-nav-ghost:hover{background:var(--off);border-color:rgba(0,0,0,.15);}
+.btn-nav-primary{padding:8px 20px;border-radius:6px;border:none;background:var(--grad-cta);color:#fff;font-size:13px;font-weight:700;font-family:var(--body);cursor:pointer;transition:all .18s;}
+.btn-nav-primary:hover{background:linear-gradient(115deg,#1E3D5C 0%,#2A7DC0 100%);transform:translateY(-1px);}
+
+/* ══════════ HERO — split, no eyebrow, faint disappearing grid ══════════ */
+.hero{
+  padding:120px 56px 80px;background:var(--white);
+  border-bottom:1px solid var(--ink-hair);position:relative;overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(68,155,213,.14) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(68,155,213,.14) 1px,transparent 1px);
+  background-size:52px 52px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 90% at 50% 50%,transparent 30%,black 75%);
+  mask-image:radial-gradient(ellipse 80% 90% at 50% 50%,transparent 30%,black 75%);
+}
+.hero-inner{
+  max-width:1000px;margin:0 auto;
+  text-align:center;position:relative;z-index:1;
+}
+.hero-headline{display:block;}
+.hero-left{display:none;}
+.hero h1{font-family:var(--sans);font-size:clamp(32px,3.6vw,52px);font-weight:800;line-height:1.1;letter-spacing:-2px;color:var(--ink);margin-bottom:24px;animation:fadeUp .45s ease both;white-space:nowrap;}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:32px;}
+.btn-hero-primary{padding:13px 26px;border-radius:8px;border:none;background:var(--grad-cta);color:#fff;font-size:14px;font-weight:700;font-family:var(--sans);cursor:pointer;transition:all .2s;}
+.btn-hero-primary:hover{background:linear-gradient(115deg,#1E3D5C 0%,#2A7DC0 100%);transform:translateY(-1px);}
+.btn-hero-ghost{padding:12px 20px;border-radius:8px;border:1px solid var(--ink-faint);background:transparent;color:var(--ink-mid);font-size:14px;font-family:var(--body);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px;}
+.btn-hero-ghost:hover{border-color:rgba(0,0,0,.18);background:var(--off);}
+.hero-right{padding-top:0;animation:fadeUp .5s .07s ease both;}
+.hero-sub{font-size:17px;line-height:1.7;color:var(--ink-muted);font-weight:400;font-family:var(--body);max-width:560px;margin:0 auto;}
+.hero-sub{font-size:17px;line-height:1.74;color:var(--ink-muted);font-weight:400;max-width:520px;}
+
+/* ══════════ LOGO BAR — light blue bg ══════════ */
+.logo-bar{padding:32px 56px 32px;background:var(--light-blue);border-top:1px solid rgba(68,155,213,.15);border-bottom:1px solid rgba(68,155,213,.15);}
+.logo-bar-inner{max-width:1200px;margin:0 auto;}
+.logo-bar-label{font-family:var(--mono);font-size:11px;color:var(--ink-muted);letter-spacing:.09em;text-transform:uppercase;text-align:center;margin-bottom:32px;}
+.logos-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:28px;flex-wrap:wrap;padding-bottom:0;
+}
+.utility-logo{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;transition:opacity .2s;}
+.logos-row:hover .utility-logo{opacity:.3;}
+.logos-row:hover .utility-logo:hover{opacity:1;}
+.u-badge{
+  width:52px;height:52px;border-radius:10px;border:1px solid rgba(68,155,213,.22);background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--sans);font-size:9px;font-weight:800;color:rgba(21,45,73,.40);
+  box-shadow:0 1px 4px rgba(0,0,0,.05);transition:border-color .2s,color .2s;
+}
+.utility-logo:hover .u-badge{border-color:rgba(68,155,213,.4);color:var(--teal);}
+.u-name{font-size:11px;color:var(--ink-muted);font-family:var(--mono);white-space:nowrap;}
+.u-link{font-size:10px;color:rgba(68,155,213,.55);font-family:var(--mono);}
+.utility-logo:hover .u-link{color:var(--teal);}
+.proof-stats{display:grid;grid-template-columns:repeat(4,1fr);padding:32px 0 40px;}
+.proof-stat{padding:0 24px;border-right:1px solid var(--ink-faint);}
+.proof-stat:first-child{padding-left:0;}
+.proof-stat:last-child{border-right:none;}
+.proof-num{font-family:var(--sans);font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1;margin-bottom:4px;background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.proof-label{font-size:13px;color:var(--ink-muted);}
+
+/* ══════════ DISCOVER — L-bracket cards, dark gradient on hover ══════════ */
+.discover-wrap{
+  background:var(--white);padding:88px 0 96px;
+  border-bottom:1px solid var(--ink-hair);overflow:hidden;
+}
+.discover-inner{display:flex;align-items:flex-start;gap:0;}
+.disc-heading{flex:0 0 420px;padding:0 40px 0 56px;}
+.disc-heading h2{
+  font-family:var(--sans);font-size:clamp(26px,2.8vw,38px);
+  font-weight:800;line-height:1.1;letter-spacing:-1.5px;color:var(--ink);
+}
+/* UtilityAI™ colored in the heading */
+.disc-heading h2 .utility-ai-color{
+  background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.disc-cards{display:flex;gap:18px;padding-right:56px;}
+/* Cards: cream/off by default, dark gradient on hover */
+.disc-card{
+  flex:0 0 330px;
+  background:var(--off);
+  padding:30px 28px 26px;
+  display:flex;flex-direction:column;justify-content:space-between;min-height:290px;
+  position:relative;cursor:pointer;
+  border-left:2px solid var(--ink);
+  border-bottom:2px solid var(--ink);
+  border-top:none;border-right:none;
+  transition:background .25s,border-color .25s,transform .22s,box-shadow .22s;
+}
+.disc-card::before{content:'';position:absolute;top:0;right:0;width:28px;height:2px;background:var(--ink);transition:background .25s;}
+.disc-card::after{content:'';position:absolute;top:0;right:0;width:2px;height:28px;background:var(--ink);transition:background .25s;}
+/* Hover: revert to dark gradient */
+.disc-card:hover{
+  background:linear-gradient(135deg,#152D49 0%,#1A4A7A 55%,#152D49 100%);
+  border-left-color:transparent;
+  border-bottom-color:transparent;
+  transform:translateY(-3px);
+  box-shadow:0 14px 44px rgba(21,45,73,.28);
+}
+.disc-card:hover::before,.disc-card:hover::after{background:transparent;}
+.disc-card-icon{
+  font-size:18px;margin-bottom:16px;
+  width:38px;height:38px;border-radius:8px;
+  background:rgba(13,17,23,.07);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .25s;
+}
+.disc-card:hover .disc-card-icon{background:rgba(255,255,255,.14);}
+.disc-card-h{font-family:var(--sans);font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-.3px;margin-bottom:10px;line-height:1.3;transition:color .25s;}
+.disc-card:hover .disc-card-h{color:#fff;}
+.disc-card-p{font-size:14px;line-height:1.72;color:var(--ink-muted);transition:color .25s;font-family:'Playfair Display',serif;font-style:italic;}
+.disc-card:hover .disc-card-p{color:rgba(255,255,255,.68);}
+.disc-card-cta{
+  display:block;font-size:13px;font-weight:600;color:var(--teal);
+  text-decoration:none;margin-top:22px;padding-top:16px;
+  border-top:1px solid var(--ink-faint);transition:color .25s,border-color .25s;
+}
+.disc-card:hover .disc-card-cta{color:var(--teal-lt);border-top-color:rgba(255,255,255,.12);}
+
+/* ══════════ SOLUTIONS — left list nav + right off-white box ══════════ */
+.sol-section{padding:72px 56px;background:var(--white);}
+.sol-inner{max-width:1200px;margin:0 auto;}
+.sol-header{margin-bottom:48px;}
+.sol-eyebrow{display:inline-block;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);margin-bottom:12px;}
+.sol-h2{font-family:var(--sans);font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing:-1.5px;line-height:1.08;color:var(--ink);margin-bottom:10px;}
+.sol-sub{font-size:16px;line-height:1.72;color:var(--ink-muted);font-weight:400;font-family:'Playfair Display',serif;font-style:italic;}
+/* Two-column layout: left nav list + right content box */
+.sol-layout{display:grid;grid-template-columns:260px 1fr;gap:32px;align-items:start;}
+/* Left: selectable solution list — outside the box */
+.sol-nav{display:flex;flex-direction:column;gap:0;}
+.sol-nav-item{
+  display:flex;align-items:center;gap:10px;padding:11px 0;
+  cursor:pointer;transition:color .15s;
+  font-size:14px;color:var(--ink-muted);font-family:var(--body);
+  white-space:nowrap;width:fit-content;
+}
+.sol-nav-item:hover .sol-nav-label,
+.sol-nav-item.active .sol-nav-label{
+  font-weight:700;color:var(--ink);
+  background-image:linear-gradient(90deg,var(--teal),var(--teal-lt));
+  background-repeat:no-repeat;
+  background-size:100% 2px;
+  background-position:0 100%;
+  padding-bottom:3px;
+}
+.sol-nav-item.active .sol-nav-dot{background:var(--teal);}  .sol-nav-item.active{border-left:2px solid var(--teal);padding-left:8px;margin-left:-10px;}
+.sol-nav-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;background:var(--ink-faint);transition:background .15s;}
+.sol-nav-label{font-size:14px;color:var(--ink-muted);transition:color .15s;padding-bottom:3px;
+  background-image:none;background-repeat:no-repeat;background-size:0 2px;background-position:0 100%;transition:background-size .2s,color .15s,font-weight .15s;
+}
+/* Right: the off-white content box */
+.sol-box{
+  background:var(--off);border-radius:24px;padding:40px;
+  border:1px solid var(--ink-hair);
+}
+.sol-panel{display:none;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+.sol-panel.active{display:grid;}
+.sol-panel-h{font-family:var(--sans);font-size:clamp(20px,2.2vw,27px);font-weight:700;letter-spacing:-.5px;color:var(--ink);margin-bottom:12px;line-height:1.2;}
+.sol-panel-body{font-size:15px;line-height:1.72;color:var(--ink-muted);margin-bottom:20px;font-weight:400;font-family:'Playfair Display',serif;font-style:italic;}
+.outcome-list{display:flex;flex-direction:column;gap:9px;margin-bottom:22px;}
+.outcome-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink);}
+.outcome-check{
+  width:18px;height:18px;border-radius:50%;flex-shrink:0;margin-top:2px;
+  background:rgba(68,155,213,.08);border:1px solid rgba(68,155,213,.24);
+  display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--teal);
+}
+.sol-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--teal);font-weight:600;font-family:var(--sans);cursor:pointer;text-decoration:none;}
+.sol-link:hover{text-decoration:underline;}
+/* Visual card inside the box */
+.sol-visual{
+  background:var(--white);border:1px solid var(--ink-hair);
+  border-radius:16px;padding:24px;
+}
+.vis-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:16px;}
+.vis-metric-row{display:flex;flex-direction:column;gap:10px;}
+.vis-metric{
+  display:flex;align-items:center;gap:12px;padding:12px 14px;
+  border-radius:10px;background:var(--off);border:1px solid var(--ink-hair);
+}
+.vis-icon{width:30px;height:30px;border-radius:7px;flex-shrink:0;background:rgba(68,155,213,.08);border:1px solid rgba(68,155,213,.18);display:flex;align-items:center;justify-content:center;font-size:13px;}
+.vis-info{flex:1;}
+.vis-lbl{font-family:var(--mono);font-size:9px;color:var(--ink-muted);margin-bottom:3px;text-transform:uppercase;letter-spacing:.07em;}
+.vis-val{font-size:14px;font-weight:600;color:var(--ink);}
+.vis-bar-row{display:flex;align-items:center;gap:8px;margin-top:4px;}
+.vis-bar-bg{flex:1;height:3px;border-radius:2px;background:var(--ink-faint);}
+.vis-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--teal),#449BD5);}
+.vis-pct{font-family:var(--mono);font-size:10px;color:var(--teal);}
+
+/* ══════════ RESULTS — white bg + disappearing grid ══════════ */
+.results-section{background:var(--white);padding:88px 56px;position:relative;overflow:hidden;}
+.results-grid-bg{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--ink-hair) 1px,transparent 1px),
+    linear-gradient(90deg,var(--ink-hair) 1px,transparent 1px);
+  background-size:52px 52px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,transparent 30%,black 80%);
+  mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,transparent 30%,black 80%);
+}
+.results-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1;}
+.eyebrow-tag{display:inline-block;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);margin-bottom:12px;}
+.s-h2{font-family:var(--sans);font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing:-1.5px;line-height:1.08;color:var(--ink);margin-bottom:16px;}
+.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px;}
+.case-card{background:var(--white);border:1px solid var(--ink-hair);border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05);transition:transform .22s,box-shadow .22s;}
+.case-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.10);}
+.case-card-top{padding:24px 24px 0;background:linear-gradient(135deg,#152D49 0%,#1A3558 100%);height:120px;display:flex;flex-direction:column;justify-content:space-between;}
+.case-utility-tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:rgba(122,191,232,.85);}
+.case-utility-name{font-family:var(--sans);font-size:22px;font-weight:800;letter-spacing:-.7px;color:#fff;}
+.case-solution-tag{align-self:flex-start;padding:3px 10px;border-radius:100px;background:rgba(68,155,213,.15);border:1px solid rgba(68,155,213,.28);font-family:var(--mono);font-size:9px;color:var(--teal-lt);letter-spacing:.06em;margin-bottom:18px;}
+.case-card-body{padding:22px 24px;}
+.case-quote{font-size:14px;font-style:italic;font-weight:400;font-family:'Playfair Display',serif;color:var(--ink);line-height:1.7;margin-bottom:18px;}
+.case-result{display:flex;align-items:baseline;gap:8px;padding-top:10px;}
+.case-result-num{font-family:var(--sans);font-size:26px;font-weight:800;letter-spacing:-1px;background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+.case-result-label{font-size:12px;color:var(--ink-muted);}
+.case-read-link{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--teal);text-decoration:none;margin-top:12px;}
+.case-read-link:hover{text-decoration:underline;}
+.view-all-row{text-align:center;margin-top:40px;}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:8px;border:1px solid var(--ink-faint);background:transparent;color:var(--ink-mid);font-size:14px;font-weight:600;font-family:var(--body);cursor:pointer;transition:all .2s;text-decoration:none;}
+.btn-outline:hover{border-color:var(--teal);color:var(--teal);}
+
+/* ══════════ RECOGNITION — light blue bg ══════════ */
+.awards-section{
+  background:var(--light-blue);padding:52px 56px;
+  border-top:1px solid rgba(68,155,213,.15);
+  border-bottom:1px solid rgba(68,155,213,.15);
+}
+.awards-inner{max-width:1200px;margin:0 auto;}
+.awards-label{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-muted);text-align:center;margin-bottom:32px;}
+.awards-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.award-item{display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;}
+.award-item-badge{font-family:var(--sans);font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-.3px;}
+.award-item-name{font-family:var(--mono);font-size:11px;color:var(--ink-muted);}
+.award-item-year{font-family:var(--mono);font-size:10px;color:var(--teal);}
+.award-divider{width:1px;height:28px;background:rgba(68,155,213,.28);}
+
+/* ══════════ FINAL CTA ══════════ */
+.footer-cta{background:linear-gradient(135deg,#152D49 0%,#1A4068 100%);padding:80px 56px;position:relative;overflow:hidden;}
+.footer-cta-inner{position:relative;z-index:1;max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:48px;padding:0 48px;}
+.footer-cta-left h2{font-family:var(--sans);font-size:clamp(30px,3.5vw,48px);font-weight:800;letter-spacing:-2px;color:#fff;line-height:1.1;margin-bottom:16px;}
+.footer-cta-sub{font-size:16px;color:rgba(255,255,255,.65);font-family:'Playfair Display',serif;font-style:italic;font-weight:400;line-height:1.65;max-width:480px;}
+.footer-cta-right{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:14px;}
+.btn-cta-light{padding:18px 44px;border-radius:10px;border:none;background:var(--white);color:var(--ink);font-size:16px;font-weight:800;font-family:var(--sans);cursor:pointer;letter-spacing:-.3px;transition:all .2s;white-space:nowrap;}
+.btn-cta-light:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,.3);}
+.cta-sub-link{font-size:13px;color:rgba(255,255,255,.45);}
+.cta-sub-link a{color:rgba(255,255,255,.6);text-decoration:none;}
+.cta-sub-link a:hover{color:#fff;}
+
+/* ══════════ FOOTER ══════════ */
+footer{padding:30px 56px;border-top:1px solid var(--ink-hair);background:var(--white);}
+.foot-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+.foot-logo{font-family:var(--sans);font-size:20px;font-weight:800;color:var(--ink);text-decoration:none;letter-spacing:-1px;}
+.foot-links{display:flex;gap:28px;}
+.foot-links a{font-size:13px;color:var(--ink-muted);text-decoration:none;}
+.foot-links a:hover{color:var(--ink);}
+.foot-copy{font-size:12px;color:var(--ink-muted);font-family:var(--mono);}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.shown{opacity:1;transform:translateY(0);}
+
+/* ══════════ PLATFORM CTA BAR ══════════ */
+.platform-bar{background:linear-gradient(135deg,#152D49 0%,#1A3F6A 60%,#0E2A50 100%);padding:56px 56px;position:relative;overflow:hidden;}
+.platform-bar-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+  background-size:52px 52px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 100% at 25% 50%,transparent 30%,black 75%);
+  mask-image:radial-gradient(ellipse 70% 100% at 25% 50%,transparent 30%,black 75%);
+}
+.platform-bar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:56px;position:relative;z-index:1;}
+.platform-bar-left{}
+.platform-bar h2{font-family:var(--sans);font-size:clamp(26px,3vw,44px);font-weight:800;letter-spacing:-1.5px;color:#fff;line-height:1.1;margin-bottom:22px;}
+.platform-logo-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.platform-logo-pill{display:flex;align-items:center;gap:7px;padding:6px 14px;border-radius:7px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.11);font-family:var(--sans);font-size:12px;font-weight:700;color:rgba(215,239,255,.75);letter-spacing:-.2px;transition:background .18s,border-color .18s,color .18s;}
+.platform-logo-pill:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.2);color:#fff;}
+.platform-logo-pill svg{flex-shrink:0;}
+.btn-platform{padding:16px 36px;border-radius:9px;border:none;background:#fff;color:var(--ink);font-size:15px;font-weight:800;font-family:var(--sans);cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;}
+.btn-platform:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.3);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div style="display:flex;align-items:center;">
+    <a class="nav-logo" href="#">
+      <span class="nav-wordmark"><span class="b-grad">b</span>idgely</span>
+    </a>
+    <ul class="nav-links">
+      <li class="nav-item">
+        <span>Solutions <svg class="nav-chev" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="nav-drop two-col">
+          <div class="drop-col">
+            <div class="drop-col-head">By Use Case</div>
+            <a class="drop-item" href="#"><div class="drop-icon di-teal">👤</div><div><div class="drop-item-name">Customer Engagement</div><div class="drop-item-desc">Personalized HERs &amp; program enrollment</div></div></a>
+            <a class="drop-item" href="#"><div class="drop-icon di-teal">⚡</div><div><div class="drop-item-name">EV Intelligence</div><div class="drop-item-desc">Detection, managed charging, load shift</div></div></a>
+            <a class="drop-item" href="#"><div class="drop-icon di-teal">🗺️</div><div><div class="drop-item-name">Grid Planning</div><div class="drop-item-desc">8760-hour DER forecasting</div></div></a>
+            <a class="drop-item" href="#"><div class="drop-icon di-teal">🌿</div><div><div class="drop-item-name">Energy Efficiency</div><div class="drop-item-desc">AI-targeted demand response recruitment</div></div></a>
+            <a class="drop-item" href="#"><div class="drop-icon di-teal">💲</div><div><div class="drop-item-name">TOU &amp; Rate Design</div><div class="drop-item-desc">Personalized bill impact &amp; behavioral nudges</div></div></a>
+          </div>
+          <div class="drop-col">
+            <div class="drop-col-head">By Role</div>
+            <a class="drop-item" href="#"><div class="drop-icon di-blue">🙋</div><div><div class="drop-item-name">VP Customer Experience</div><div class="drop-item-desc">CX, CX/EE, DSM programs</div></div></a>
+            <a class="drop-item" href="#"><div class="drop-icon di-blue">⚡</div><div><div class="drop-item-name">VP Grid Operations</div><div class="drop-item-desc">Grid planners &amp; operators</div></div></a>
+            <a class="drop-item" href="#"><div class="drop-icon di-blue">📊</div><div><div class="drop-item-name">Utility Analytics</div><div class="drop-item-desc">Data analysts &amp; analytics groups</div></div></a>
+            <a class="drop-item" href="#"><div class="drop-icon di-blue">🚗</div><div><div class="drop-item-name">EV Program Manager</div><div class="drop-item-desc">Electrification &amp; EV intelligence</div></div></a>
+            <a class="drop-item" href="#"><div class="drop-icon di-blue">🤖</div><div><div class="drop-item-name">CAIO / Chief AI Officer</div><div class="drop-item-desc">Cloud, datalake &amp; AI strategy</div></div></a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <span>Technology <svg class="nav-chev" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="nav-drop" style="min-width:280px;">
+          <a class="drop-item" href="#"><div class="drop-icon di-teal">🧠</div><div><div class="drop-item-name">UtilityAI™</div><div class="drop-item-desc">The core behind-the-meter intelligence platform</div></div></a>
+          <a class="drop-item" href="#"><div class="drop-icon di-blue">☁️</div><div><div class="drop-item-name">UtilityAI™ Pro</div><div class="drop-item-desc">Private cloud deployment. Your data, your control.</div></div></a>
+          <a class="drop-item" href="#"><div class="drop-icon di-sky">🔗</div><div><div class="drop-item-name">Data-as-a-Service API</div><div class="drop-item-desc">Embedded BTM intelligence for your ecosystem</div></div></a>
+          <div class="drop-divider"></div>
+          <a class="drop-item" href="#"><div class="drop-icon di-muted">🤖</div><div><div class="drop-item-name">UtilityAI Assistant</div><div class="drop-item-desc">Ask anything about your grid and customers</div></div></a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="#">Customers</a></li>
+      <li class="nav-item"><a href="#">Resources</a></li>
+      <li class="nav-item"><a href="#">Company</a></li>
+    </ul>
+  </div>
+  <div class="nav-cta">
+    <button class="btn-nav-ghost">Log In</button>
+    <button class="btn-nav-primary">Talk to Sales</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-headline">
+      <h1>Every smart meter is a window.<br>Few utilities ever look through.</h1>
+      <div class="hero-right">
+        <p class="hero-sub">Appliance-level intelligence for every customer, grid asset, and hour of the year, only on <strong style="background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700;">Bidgely UtilityAI™</strong>.</p>
+      </div>
+      <div class="hero-actions">
+        <button class="btn-hero-primary">Talk to Sales</button>
+        <button class="btn-hero-ghost">
+          <svg width="11" height="13" viewBox="0 0 11 13" fill="none"><path d="M1 1.5L10 6.5L1 11.5V1.5Z" fill="currentColor" opacity=".45"/></svg>
+          Watch Overview
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGO BAR — light blue bg -->
+<div class="logo-bar">
+  <div class="logo-bar-inner">
+    <div class="logo-bar-label">Trusted by leading utilities on 4 continents</div>
+    <div class="logos-row">
+      <a class="utility-logo" href="#"><div class="u-badge">PG&E</div><div class="u-name">Pacific Gas &amp; Electric</div><div class="u-link">Case study →</div></a>
+      <a class="utility-logo" href="#"><div class="u-badge">NVE</div><div class="u-name">NV Energy</div><div class="u-link">Case study →</div></a>
+      <a class="utility-logo" href="#"><div class="u-badge">AVS</div><div class="u-name">Avista Utilities</div><div class="u-link">Case study →</div></a>
+      <a class="utility-logo" href="#"><div class="u-badge">NSP</div><div class="u-name">Nova Scotia Power</div><div class="u-link">Case study →</div></a>
+      <a class="utility-logo" href="#"><div class="u-badge">OG&E</div><div class="u-name">Oklahoma Gas &amp; Electric</div><div class="u-link">Case study →</div></a>
+      <a class="utility-logo" href="#"><div class="u-badge">XCL</div><div class="u-name">Xcel Energy</div><div class="u-link">Case study →</div></a>
+      <a class="utility-logo" href="#"><div class="u-badge">EDF</div><div class="u-name">EDF Energy</div><div class="u-link">Case study →</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- AI PLATFORM CAPABILITIES — same layout as Discover, no eyebrow -->
+<div class="discover-wrap">
+  <div class="discover-inner">
+    <div class="disc-heading" style="padding-bottom:0;">
+      <h2><span class="utility-ai-color">Vertical AI</span> for the entire utility enterprise.</h2>
+      <p style="font-size:14px;line-height:1.72;color:var(--ink-muted);margin-top:16px;font-weight:300;">Deliver personalized CX, strengthen grid operations, and maximize efficiency and electrification programs, as SaaS or deployed in your cloud.</p>
+    </div>
+    <div class="disc-cards">
+      <div class="disc-card reveal">
+        <div>
+          <h3 class="disc-card-h">Patented Disaggregation</h3>
+          <p class="disc-card-p">Identifies what's running inside every home and business from meter data alone. No surveys. No smart plugs. No customer action required. Every insight on the platform is built on this foundation.</p>
+        </div>
+        <a class="disc-card-cta" href="#">Explore our Disaggregation →</a>
+      </div>
+      <div class="disc-card reveal">
+        <div>
+          <h3 class="disc-card-h">GenAI</h3>
+          <p class="disc-card-p">Ask questions in plain English, get answers grounded in real data. A CSR resolves a high-bill call in seconds. A planner queries load trends across feeders without writing a line of code. No data team required.</p>
+        </div>
+        <a class="disc-card-cta" href="#">Explore our GenAI →</a>
+      </div>
+      <div class="disc-card reveal">
+        <div>
+          <h3 class="disc-card-h">Agentic AI</h3>
+          <p class="disc-card-p">AI agents work continuously in the background across targeting, outreach, enrollment, and program management. You set the rules and approve what matters. Agents handle the volume. Your team handles the judgment.</p>
+        </div>
+        <a class="disc-card-cta" href="#">Explore our Agentic AI →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOLUTIONS — left selectable list, right off-white box -->
+<section class="sol-section">
+  <div class="sol-inner">
+    <div class="sol-header">
+      <div class="sol-eyebrow">Solutions</div>
+      <h2 class="sol-h2">Every meter becomes a <span style="background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">decision.</span></h2>
+      <p class="sol-sub">The data you need is already behind every meter. Decode it and put it to work.</p>
+    </div>
+
+    <div class="sol-layout">
+      <!-- Left: selectable list — outside the box -->
+      <div class="sol-nav">
+        <div class="sol-nav-item active" onclick="switchSol(0,this)">
+          <span class="sol-nav-label">Customer Engagement</span>
+        </div>
+        <div class="sol-nav-item" onclick="switchSol(1,this)">
+          <span class="sol-nav-label">Grid Planning</span>
+        </div>
+        <div class="sol-nav-item" onclick="switchSol(2,this)">
+          <span class="sol-nav-label">Energy Efficiency</span>
+        </div>
+        <div class="sol-nav-item" onclick="switchSol(3,this)">
+          <span class="sol-nav-label">EV &amp; Electrification</span>
+        </div>
+        <div class="sol-nav-item" onclick="switchSol(4,this)">
+          <span class="sol-nav-label">Rates &amp; Affordability</span>
+        </div>
+      </div>
+
+      <!-- Right: off-white box, content swaps on selection -->
+      <div class="sol-box">
+
+        <div class="sol-panel active" id="sol-0">
+          <div>
+            <h3 class="sol-panel-h">Personalize every customer interaction.</h3>
+            <p class="sol-panel-body">Billing, programs, and service informed by appliance-level intelligence, not just demographics.</p>
+            <div class="outcome-list">
+              <div class="outcome-item"><span class="outcome-check">✓</span> 50%+ reduction in high-bill call volume through proactive outreach</div>
+              <div class="outcome-item"><span class="outcome-check">✓</span> 2+ quartile JD Power improvement seen by reference utilities</div>
+              <div class="outcome-item"><span class="outcome-check">✓</span> 80%+ CSAT across tools and programs</div>
+            </div>
+            <a class="sol-link" href="#">Explore Customer Engagement →</a>
+          </div>
+          <div class="sol-visual">
+            <div class="vis-label">Live Customer Insight · Meter #47822</div>
+            <div class="vis-metric-row">
+              <div class="vis-metric"><div class="vis-icon">❄️</div><div class="vis-info"><div class="vis-lbl">HVAC usage anomaly</div><div class="vis-val">+42% above baseline</div><div class="vis-bar-row"><div class="vis-bar-bg"><div class="vis-bar-fill" style="width:72%"></div></div><span class="vis-pct">$38 bill impact</span></div></div></div>
+              <div class="vis-metric"><div class="vis-icon">💡</div><div class="vis-info"><div class="vis-lbl">Program match</div><div class="vis-val">Smart Thermostat Rebate</div><div class="vis-bar-row"><div class="vis-bar-bg"><div class="vis-bar-fill" style="width:88%"></div></div><span class="vis-pct">88% propensity</span></div></div></div>
+              <div class="vis-metric"><div class="vis-icon">📊</div><div class="vis-info"><div class="vis-lbl">Recommended action</div><div class="vis-val">Proactive outreach via email</div><div class="vis-bar-row"><div class="vis-bar-bg"><div class="vis-bar-fill" style="width:60%"></div></div><span class="vis-pct">Best channel match</span></div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sol-panel" id="sol-1">
+          <div>
+            <h3 class="sol-panel-h">See what's behind every transformer, feeder, substation.</h3>
+            <p class="sol-panel-body">Forecast DER-driven load, identify constrained assets, and design Non-Wires Alternatives with behind-the-meter visibility.</p>
+            <div class="outcome-list">
+              <div class="outcome-item"><span class="outcome-check">✓</span> 90%+ DER and heat pump detection accuracy at the premise level</div>
+              <div class="outcome-item"><span class="outcome-check">✓</span> 13 MW peak demand savings at reference utility deployments</div>
+              <div class="outcome-item"><span class="outcome-check">✓</span> Long-range load forecasting with EV and electrification curves built in</div>
+            </div>
+            <a class="sol-link" href="#">Explore Grid Planning →</a>
+          </div>
+          <div class="sol-visual">
+            <div class="vis-label">Transformer Load Forecast · Feeder 12B</div>
+            <div class="vis-metric-row">
+              <div class="vis-metric"><div class="vis-icon">🔌</div><div class="vis-info"><div class="vis-lbl">EV adoption detected</div><div class="vis-val">47 new EVs on feeder</div><div class="vis-bar-row"><div class="vis-bar-bg"><div class="vis-bar-fill" style="width:65%"></div></div><span class="vis-pct">+2.4 MW peak risk</span></div></div></div>
+              <div class="vis-metric"><div class="vis-icon">🌡️</div><div class="vis-info"><div class="vis-lbl">Heat pump detection</div><div class="vis-val">91% accuracy confirmed</div><div class="vis-bar-row"><div class="vis-bar-bg"><div class="vis-bar-fill" style="width:91%"></div></div><span class="vis-pct">No field survey needed</span></div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sol-panel" id="sol-2">
+          <div>
+            <h3 class="sol-panel-h">Target the right customers. Prove the savings.</h3>
+            <p class="sol-panel-body">Target, recruit, and measure DSM programs using appliance-level segmentation and automated M&amp;V.</p>
+            <div class="outcome-list">
+              <div class="outcome-item"><span class="outcome-check">✓</span> 127% of filed EE targets achieved at reference utilities</div>
+              <div class="outcome-item"><span class="outcome-check">✓</span> 4x reduction in marketing cost per program enrollment</div>
+              <div class="outcome-item"><span class="outcome-check">✓</span> Regulator-ready savings documentation from day one</div>
+            </div>
+            <a class="sol-link" href="#">Explore Energy Efficiency →</a>
+          </div>
+          <div class="sol-visual">
+            <div class="vis-label">DSM Targeting · Heat Pump Program</div>
+            <div class="vis-metric-row">
+              <div class="vis-metric"><div class="vis-icon">🎯</div><div class="vis-info"><div class="vis-lbl">Qualified households</div><div class="vis-val">12,480 identified</div><div class="vis-bar-row"><div class="vis-bar-bg"><div class="vis-bar-fill" style="width:79%"></div></div><span class="vis-pct">vs 3,200 generic list</span></div></div></div>
+              <div class="vis-metric"><div class="vis-icon">📈</div><div class="vis-info"><div class="vis-lbl">Projected savings</div><div class="vis-val">4,200 MWh / year</div><div class="vis-bar-row"><div class="vis-bar-bg"><div class="vis-bar-fill" style="width:55%"></div></div><span class="vis-pct">127% of target</span></div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sol-panel" id="sol-3">
+          <div>
+            <h3 class="sol-panel-h">Identify and coach every home with an EV or heat pump.</h3>
+            <p class="sol-panel-body">Identify EV and heat pump adopters, manage their load impact, and coordinate with grid planning automatically.</p>
+            <div class="outcome-list">
+              <div class="outcome-item"><span class="outcome-check">✓</span> EV and heat pump identification with 90%+ accuracy, no survey required</div>
+              <div class="outcome-item"><span class="outcome-check">✓</span> 42% peak load reduction through managed charging programs</div>
+              <div class="outcome-item"><span class="outcome-check">✓</span> Automatic feeder-level load impact modeling as EVs onboard</div>
+            </div>
+            <a class="sol-link" href="#">Explore EV &amp; Electrification →</a>
+          </div>
+          <div class="sol-visual">
+            <div class="vis-label">EV Load Management · Managed Charging</div>
+            <div class="vis-metric-row">
+              <div class="vis-metric"><div class="vis-icon">🚗</div><div class="vis-info"><div class="vis-lbl">EV sessions shifted</div><div class="vis-val">42% peak reduction</div><div class="vis-bar-row"><div class="vis-bar-bg"><div class="vis-bar-fill" style="width:42%"></div></div><span class="vis-pct">Off-peak shift confirmed</span></div></div></div>
+              <div class="vis-metric"><div class="vis-icon">🔌</div><div class="vis-info"><div class="vis-lbl">New EVs detected</div><div class="vis-val">No charger registration needed</div><div class="vis-bar-row"><div class="vis-bar-bg"><div class="vis-bar-fill" style="width:90%"></div></div><span class="vis-pct">90%+ accuracy</span></div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sol-panel" id="sol-4">
+          <div>
+            <h3 class="sol-panel-h">File with evidence, not estimates.</h3>
+            <p class="sol-panel-body">Model rate impacts at the appliance level, identify LMI customers at the premise, and build regulator-ready evidence packages.</p>
+            <div class="outcome-list">
+              <div class="outcome-item"><span class="outcome-check">✓</span> Premise-level energy burden identification, no form required</div>
+              <div class="outcome-item"><span class="outcome-check">✓</span> 50% higher affordability program enrollment with targeted outreach</div>
+              <div class="outcome-item"><span class="outcome-check">✓</span> 3x enrollment and 98%+ retention at reference utilities</div>
+            </div>
+            <a class="sol-link" href="#">Explore Rates &amp; Affordability →</a>
+          </div>
+          <div class="sol-visual">
+            <div class="vis-label">Rate Impact Modeling · TOU Migration</div>
+            <div class="vis-metric-row">
+              <div class="vis-metric"><div class="vis-icon">📋</div><div class="vis-info"><div class="vis-lbl">Customer segments modeled</div><div class="vis-val">Appliance-level precision</div><div class="vis-bar-row"><div class="vis-bar-bg"><div class="vis-bar-fill" style="width:95%"></div></div><span class="vis-pct">Commission-ready</span></div></div></div>
+              <div class="vis-metric"><div class="vis-icon">🏠</div><div class="vis-info"><div class="vis-lbl">LMI households identified</div><div class="vis-val">50% higher enrollment</div><div class="vis-bar-row"><div class="vis-bar-bg"><div class="vis-bar-fill" style="width:50%"></div></div><span class="vis-pct">vs zip-code method</span></div></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM CTA BAR -->
+<div class="platform-bar">
+  <div class="platform-bar-grid"></div>
+  <div class="platform-bar-inner">
+    <div class="platform-bar-left">
+      <h2>Deployed in your cloud or ours.</h2>
+      <div class="platform-logo-row">
+        <!-- AWS -->
+        <div class="platform-logo-pill">
+          <svg width="18" height="11" viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.9 19.2c0 .8.1 1.4.2 1.8.2.4.4.8.8 1.2.1.1.2.3.2.4 0 .2-.1.4-.4.5l-1.3.9c-.2.1-.4.2-.5.2-.2 0-.4-.1-.6-.3-.3-.3-.5-.6-.7-1-.2-.4-.4-.8-.4-1.3-1 1.2-2.3 1.8-3.8 1.8-1.1 0-2-.3-2.6-.9-.6-.6-1-1.5-1-2.5 0-1.1.4-2 1.2-2.7.8-.7 1.9-1 3.3-1 .5 0 .9 0 1.4.1.5.1 1 .2 1.5.3v-1c0-1-.2-1.7-.6-2.1-.4-.4-1.1-.6-2.1-.6-.5 0-.9.1-1.4.2-.5.1-1 .3-1.5.5-.2.1-.4.2-.5.2-.2 0-.3-.1-.3-.4v-.7c0-.2 0-.4.1-.5.1-.1.3-.2.5-.3.5-.2 1.1-.4 1.7-.5.6-.1 1.3-.2 2-.2 1.5 0 2.6.3 3.3 1 .7.7 1.1 1.7 1.1 3.1v4.1zm-5.3 2c.4 0 .9-.1 1.4-.3.5-.2.9-.5 1.2-1 .2-.3.3-.6.4-1 .1-.4.1-.8.1-1.3v-.6c-.4-.1-.8-.1-1.2-.2-.4 0-.8-.1-1.2-.1-.9 0-1.5.2-1.9.5-.4.3-.7.8-.7 1.5 0 .6.2 1.1.5 1.4.3.3.7.1 1.4.1zm10.2 1.4c-.2 0-.4-.1-.5-.2-.1-.1-.2-.4-.3-.7l-3.3-10.8c-.1-.3-.1-.5-.1-.7 0-.3.1-.4.4-.4h1.6c.2 0 .4.1.5.2.1.1.2.4.3.7l2.4 9.4 2.2-9.4c.1-.3.2-.6.3-.7.1-.1.3-.2.5-.2h1.3c.2 0 .4.1.5.2.1.1.2.4.3.7l2.2 9.5 2.4-9.5c.1-.3.2-.6.3-.7.1-.1.3-.2.5-.2h1.5c.3 0 .4.1.4.4 0 .1 0 .2-.1.3 0 .1-.1.3-.2.5l-3.4 10.8c-.1.3-.2.6-.3.7-.1.1-.3.2-.5.2h-1.4c-.2 0-.4-.1-.5-.2-.1-.1-.2-.4-.3-.7l-2.2-9.2-2.2 9.2c-.1.3-.2.6-.3.7-.1.1-.3.2-.5.2h-1.5zm18.2.4c-.8 0-1.7-.1-2.5-.3-.8-.2-1.4-.4-1.9-.7-.3-.2-.4-.4-.4-.6v-.8c0-.3.1-.4.4-.4.1 0 .2 0 .4.1.1.1.2.1.4.2.5.2 1.1.4 1.7.5.6.1 1.2.2 1.8.2 1 0 1.7-.2 2.2-.5.5-.3.8-.8.8-1.4 0-.4-.1-.7-.4-1-.3-.3-.9-.6-1.7-.8l-2.4-.8c-1.2-.4-2.1-.9-2.6-1.7-.5-.7-.8-1.6-.8-2.5 0-.7.1-1.4.5-1.9.3-.6.7-1 1.3-1.4.5-.4 1.1-.7 1.8-.9.7-.2 1.4-.3 2.2-.3.4 0 .8 0 1.2.1.4 0 .8.1 1.2.2.4.1.7.2 1 .3.3.1.6.2.7.4.2.1.3.2.3.4.1.1.1.3.1.5v.7c0 .3-.1.4-.4.4-.1 0-.4-.1-.7-.3-.9-.4-1.9-.6-2.9-.6-.9 0-1.6.1-2.1.4-.5.3-.7.7-.7 1.3 0 .4.1.8.5 1 .3.3.9.6 1.9.9l2.3.7c1.2.4 2 .9 2.5 1.6.5.7.7 1.5.7 2.4 0 .7-.1 1.4-.5 2-.3.6-.8 1.1-1.3 1.5-.6.4-1.2.7-1.9.9-.7.3-1.5.4-2.3.4z" fill="rgba(235,240,250,.8)"/>
+            <path d="M70.5 37.5c-8.5 6.3-20.9 9.7-31.6 9.7-14.9 0-28.4-5.5-38.6-14.7-.8-.7-.1-1.7.9-1.1 11 6.4 24.6 10.2 38.7 10.2 9.5 0 19.9-2 29.5-6.1 1.4-.7 2.6.9 1.1 2zm3.2-3.7c-1.1-1.4-7.4-.7-10.2-.3-.9.1-1-.6-.2-1.2 5-3.5 13.2-2.5 14.1-1.3.9 1.2-.2 9.4-4.9 13.3-.7.6-1.4.3-1.1-.5 1-2.6 3.3-8.5 2.3-10z" fill="#FF9900"/>
+          </svg>
+          AWS
+        </div>
+        <!-- Snowflake -->
+        <div class="platform-logo-pill">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 0L9.5 2.7 12.5 1.1 11 3.8 14 4 11.5 5.5 13.9 7 11 7 11 9 13.9 9 11.5 10.5 14 12 11 11.2 12.5 13.9 9.5 12.3 8 15 6.5 12.3 3.5 13.9 5 11.2 2 12 4.5 10.5 1.1 9 4 9 1.5 7 4.5 7 3 5.5 5 4 2 3.8 5 1.1 2.5 2.7z" fill="rgba(68,155,213,.85)" opacity="0.9"/>
+          </svg>
+          Snowflake
+        </div>
+        <!-- Databricks -->
+        <div class="platform-logo-pill">
+          <svg width="16" height="14" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 0L20 5.7V8.5L10 14.2 0 8.5V5.7L10 0Z" fill="rgba(255,100,50,.75)"/>
+            <path d="M10 2.8L18 7.1 10 11.4 2 7.1 10 2.8Z" fill="rgba(255,140,80,.6)"/>
+            <path d="M0 10.2L10 16 20 10.2V13L10 17 0 13V10.2Z" fill="rgba(255,100,50,.75)"/>
+          </svg>
+          Databricks
+        </div>
+        <!-- Azure -->
+        <div class="platform-logo-pill">
+          <svg width="16" height="14" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.1 0L7.1 5.8 0 19h6.3l6.8-13.2L9.7 19H24L13.1 0Z" fill="rgba(0,120,212,.8)"/>
+          </svg>
+          Azure
+        </div>
+        <!-- Oracle Cloud -->
+        <div class="platform-logo-pill">
+          <svg width="18" height="12" viewBox="0 0 36 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="36" height="20" rx="10" fill="none"/>
+            <path d="M10 0h16a10 10 0 010 20H10A10 10 0 010 10 10 10 0 0110 0zm16 16a6 6 0 000-12H10a6 6 0 000 12h16z" fill="rgba(200,50,50,.8)"/>
+          </svg>
+          Oracle Cloud
+        </div>
+        <!-- MongoDB -->
+        <div class="platform-logo-pill">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 2C16 2 10 8 10 16.5C10 21.5 13 25.5 16 27.5C19 25.5 22 21.5 22 16.5C22 8 16 2 16 2Z" fill="rgba(0,237,100,.75)"/>
+            <path d="M16 27.5L15.5 29.5L16 30L16.5 29.5L16 27.5Z" fill="rgba(0,180,80,.7)"/>
+          </svg>
+          MongoDB
+        </div>
+        <!-- CoreWeave -->
+        <div class="platform-logo-pill">
+          <svg width="16" height="14" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="8" height="8" rx="2" fill="rgba(122,191,232,.8)"/>
+            <rect x="10" y="0" width="8" height="8" rx="2" fill="rgba(68,155,213,.8)"/>
+            <rect x="5" y="10" width="8" height="8" rx="2" fill="rgba(21,45,73,.8)"/>
+          </svg>
+          CoreWeave
+        </div>
+      </div>
+    </div>
+    <button class="btn-platform">Explore the Platform</button>
+  </div>
+</div>
+
+<!-- PROVEN RESULTS — white bg + disappearing grid -->
+<section class="results-section">
+  <div class="results-grid-bg"></div>
+  <div class="results-inner">
+    <div style="text-align:center;">
+      <div class="eyebrow-tag">Proven Results</div>
+      <h2 class="s-h2">Deployed at scale. Measured at the <span style="background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">meter.</span></h2>
+    </div>
+    <div class="proof-stats" style="margin-top:36px;margin-bottom:0;padding-bottom:0;">
+      <div class="proof-stat"><div class="proof-num">38M+</div><div class="proof-label">Meters analyzed</div></div>
+      <div class="proof-stat"><div class="proof-num">1TB</div><div class="proof-label">Data processed daily</div></div>
+      <div class="proof-stat"><div class="proof-num">270B</div><div class="proof-label">Data points per home</div></div>
+      <div class="proof-stat"><div class="proof-num">50+</div><div class="proof-label">Utility deployments</div></div>
+    </div>
+    <div class="case-grid">
+      <div class="case-card reveal">
+        <div class="case-card-top">
+          <div class="case-utility-tag">EV Intelligence</div>
+          <div class="case-utility-name">NV Energy</div>
+          <div class="case-solution-tag">EV &amp; GRID</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-quote">Narrowed 33,000 EV customers to 1,000 high-impact households, focused on the 3% driving disproportionate load and accelerating TOU adoption with precision targeting.</div>
+          <div class="case-result"><span class="case-result-num">33K → 1K</span><span class="case-result-label">EV customers targeted with precision</span></div>
+          <a class="case-read-link" href="#">Read Case Study →</a>
+        </div>
+      </div>
+      <div class="case-card reveal">
+        <div class="case-card-top">
+          <div class="case-utility-tag">Customer Engagement</div>
+          <div class="case-utility-name">PSEG Long Island</div>
+          <div class="case-solution-tag">PERSONALIZATION</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-quote">Personalized communications delivered at scale, with 3x engagement lift and 97% customer satisfaction across the program.</div>
+          <div class="case-result"><span class="case-result-num">20M+</span><span class="case-result-label">personalized communications delivered</span></div>
+          <a class="case-read-link" href="#">Read Case Study →</a>
+        </div>
+      </div>
+      <div class="case-card reveal">
+        <div class="case-card-top">
+          <div class="case-utility-tag">Energy Efficiency</div>
+          <div class="case-utility-name">NW Natural</div>
+          <div class="case-solution-tag">DSM PERFORMANCE</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-quote">Exceeded all performance targets and proved ROI from day one, delivering 238% of contracted savings in the first year of deployment.</div>
+          <div class="case-result"><span class="case-result-num">238%</span><span class="case-result-label">of contracted savings achieved in year one</span></div>
+          <a class="case-read-link" href="#">Read Case Study →</a>
+        </div>
+      </div>
+    </div>
+    <div class="view-all-row"><a class="btn-outline" href="#">View All Case Studies →</a></div>
+  </div>
+</section>
+
+<!-- RECOGNITION — light blue bg -->
+<section class="awards-section">
+  <div class="awards-inner">
+    <div class="awards-label">Awards &amp; Recognition</div>
+    <div class="awards-row">
+      <div class="award-item"><div class="award-item-badge">Fast Company</div><div class="award-item-name">#7 Applied AI</div><div class="award-item-year">2024</div></div>
+      <div class="award-divider"></div>
+      <div class="award-item"><div class="award-item-badge">Guidehouse</div><div class="award-item-name">Leader, Utility Analytics</div><div class="award-item-year">2024</div></div>
+      <div class="award-divider"></div>
+      <div class="award-item"><div class="award-item-badge">Cleantech 100</div><div class="award-item-name">Global Cleantech Group</div><div class="award-item-year">2024</div></div>
+      <div class="award-divider"></div>
+      <div class="award-item"><div class="award-item-badge">Frost &amp; Sullivan</div><div class="award-item-name">Technology Innovation</div><div class="award-item-year">2023</div></div>
+      <div class="award-divider"></div>
+      <div class="award-item"><div class="award-item-badge">ACEEE</div><div class="award-item-name">Exemplary Behavior Program</div><div class="award-item-year">2022</div></div>
+      <div class="award-divider"></div>
+      <div class="award-item"><div class="award-item-badge">EnerTech Capital</div><div class="award-item-name">Top Energy AI Company</div><div class="award-item-year">2022</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="footer-cta">
+  <div class="footer-cta-inner">
+    <div class="footer-cta-left">
+      <h2>See UtilityAI in<br>your environment.</h2>
+      <p class="footer-cta-sub">Join the utilities delivering individual-level intelligence across every customer, meter, and grid asset.</p>
+    </div>
+    <div class="footer-cta-right">
+      <button class="btn-cta-light">Talk to Sales</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <a class="foot-logo" href="#">bidgely</a>
+    <div class="foot-links">
+      <a href="#">Solutions</a><a href="#">Platform</a><a href="#">Case Studies</a>
+      <a href="#">Resources</a><a href="#">Careers</a><a href="#">Privacy</a>
+    </div>
+    <div class="foot-copy">© 2025 Bidgely, Inc.</div>
+  </div>
+</footer>
+
+<script>
+function switchSol(i, el) {
+  document.querySelectorAll('.sol-nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.sol-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('sol-' + i).classList.add('active');
+}
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('shown'); });
+}, { threshold: .06 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
