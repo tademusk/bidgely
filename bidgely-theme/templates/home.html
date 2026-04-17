@@ -9,6 +9,7 @@ label: "Home"
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{ require_css(get_asset_url('../css/main.css')) }}
     {{ standard_header_includes }}
   </head>
   <body>
@@ -24,6 +25,7 @@ label: "Home"
     {% end_dnd_area %}
 
     {% global_partial path="../partials/footer.html" %}
+    {{ require_js(get_asset_url('../js/main.js')) }}
     {{ standard_footer_includes }}
   </body>
 </html>
