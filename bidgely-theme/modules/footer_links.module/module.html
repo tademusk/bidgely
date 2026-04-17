@@ -15,9 +15,9 @@
           <div>
             <div style="font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--teal); margin-bottom: 12px;">{{ col.heading|escape }}</div>
             <div style="display: flex; flex-direction: column; gap: 6px;">
-              {% for link in col.links %}
-                <a href="{{ link.url.href|default('#') }}" style="font-size: 12px; color: var(--ink-muted); text-decoration: none; line-height: 1.35;">
-                  {{ link.text|escape }}
+              {% for item in col.links %}
+                <a href="{{ item.link.url.href|default('#') }}" style="font-size: 12px; color: var(--ink-muted); text-decoration: none; line-height: 1.35;">
+                  {{ item.text|escape }}
                 </a>
               {% endfor %}
             </div>
@@ -28,9 +28,9 @@
 
     <div style="margin-top: 26px; padding-top: 14px; border-top: 1px solid var(--ink-hair); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
       <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-        {% for link in module.legal_links %}
-          <a href="{{ link.url.href|default('#') }}" style="font-size: 11px; color: var(--ink-muted); text-decoration: none;">
-            {{ link.text|escape }}
+        {% for item in module.legal_links %}
+          <a href="{{ item.link.url.href|default('#') }}" style="font-size: 11px; color: var(--ink-muted); text-decoration: none;">
+            {{ item.text|escape }}
           </a>
         {% endfor %}
       </div>

@@ -4,7 +4,7 @@
 <nav class="b-nav">
   <div class="container b-nav__inner">
     <div class="b-nav__left">
-      <a class="b-nav__logo" href="{{ module.logo_link.href|default('#') }}">
+      <a class="b-nav__logo" href="{{ module.logo_link.url.href|default('#') }}">
         {% if logo_src %}
           <img src="{{ logo_src }}" alt="{{ logo_alt|escape }}" loading="eager" />
         {% else %}
@@ -21,12 +21,12 @@
 
     <div class="b-nav__cta">
       {% if module.secondary_cta_text %}
-        <a class="b-btn b-btn--ghost" href="{{ module.secondary_cta_url.href|default('#') }}">
+        <a class="b-btn b-btn--ghost" href="{{ module.secondary_cta_link.url.href|default('#') }}">
           {{ module.secondary_cta_text|escape }}
         </a>
       {% endif %}
       {% if module.primary_cta_text %}
-        <a class="b-btn b-btn--primary" href="{{ module.primary_cta_url.href|default('#') }}">
+        <a class="b-btn b-btn--primary" href="{{ module.primary_cta_link.url.href|default('#') }}">
           {{ module.primary_cta_text|escape }}
         </a>
       {% endif %}

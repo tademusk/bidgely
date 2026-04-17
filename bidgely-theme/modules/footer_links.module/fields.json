@@ -27,9 +27,9 @@
             "type": "text"
           },
           {
-            "name": "url",
-            "label": "URL",
-            "type": "url"
+            "name": "link",
+            "label": "Link",
+            "type": "link"
           }
         ]
       }
@@ -47,9 +47,9 @@
         "type": "text"
       },
       {
-        "name": "url",
-        "label": "URL",
-        "type": "url"
+        "name": "link",
+        "label": "Link",
+        "type": "link"
       }
     ]
   },

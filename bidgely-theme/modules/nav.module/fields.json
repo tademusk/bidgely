@@ -8,7 +8,7 @@
   {
     "name": "logo_link",
     "label": "Logo Link",
-    "type": "url"
+    "type": "link"
   },
   {
     "name": "menu",
@@ -22,9 +22,9 @@
     "default": "Log In"
   },
   {
-    "name": "secondary_cta_url",
-    "label": "Secondary CTA URL",
-    "type": "url"
+    "name": "secondary_cta_link",
+    "label": "Secondary CTA Link",
+    "type": "link"
   },
   {
     "name": "primary_cta_text",
@@ -33,8 +33,8 @@
     "default": "Talk to Sales"
   },
   {
-    "name": "primary_cta_url",
-    "label": "Primary CTA URL",
-    "type": "url"
+    "name": "primary_cta_link",
+    "label": "Primary CTA Link",
+    "type": "link"
   }
 ]

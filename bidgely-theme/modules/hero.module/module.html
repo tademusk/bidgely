@@ -9,12 +9,12 @@
 
     <div class="b-hero__actions">
       {% if module.primary_cta_text %}
-        <a class="b-btn b-btn--primary" href="{{ module.primary_cta_url.href|default('#') }}">
+        <a class="b-btn b-btn--primary" href="{{ module.primary_cta_link.url.href|default('#') }}">
           {{ module.primary_cta_text|escape }}
         </a>
       {% endif %}
       {% if module.secondary_cta_text %}
-        <a class="b-btn b-btn--ghost" href="{{ module.secondary_cta_url.href|default('#') }}">
+        <a class="b-btn b-btn--ghost" href="{{ module.secondary_cta_link.url.href|default('#') }}">
           {{ module.secondary_cta_text|escape }}
         </a>
       {% endif %}
