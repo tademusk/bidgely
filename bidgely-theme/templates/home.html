@@ -4,15 +4,26 @@ isAvailableForNewContent: true
 label: "Home"
 -->
 
-{% global_partial path="../partials/header.html" %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{ standard_header_includes }}
+  </head>
+  <body>
+    {% global_partial path="../partials/header.html" %}
 
-{% dnd_area "dnd_area" label="Main" %}
-  {% dnd_section %}
-    {% dnd_module path="../modules/hero" label="Hero" %}
-    {% end_dnd_module %}
-  {% end_dnd_section %}
+    {% dnd_area "dnd_area" label="Main" %}
+      {% dnd_section %}
+        {% dnd_module path="../modules/hero.module" label="Hero" %}
+        {% end_dnd_module %}
+      {% end_dnd_section %}
 
-  {# Add remaining sections/modules via the page editor. #}
-{% end_dnd_area %}
+      {# Add remaining sections/modules via the page editor. #}
+    {% end_dnd_area %}
 
-{% global_partial path="../partials/footer.html" %}
+    {% global_partial path="../partials/footer.html" %}
+    {{ standard_footer_includes }}
+  </body>
+</html>
